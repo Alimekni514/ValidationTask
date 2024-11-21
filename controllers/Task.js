@@ -11,7 +11,10 @@ export const getTasks = async (req, res, next) => {
 
 export const getTask = async (req, res, next) => {
   try {
-    const task = await Task.findById(req.params.id);
+    const task = await Task.findOne({ _id: req.params.id })
+      .populate("author")
+      .populate("categories")
+      .exec();
     if (!task) {
       res.status(404).json({ msg: "task not found" });
     } else {
