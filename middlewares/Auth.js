@@ -39,3 +39,10 @@ export const isAdmin = (req, res, next) => {
     res.status(401).json({ error: error.message });
   }
 };
+export  const validateSignup = (req, res, next) => {
+  const { error } = signupSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json({ error: error.details[0].message });
+  }
+  next();
+};
